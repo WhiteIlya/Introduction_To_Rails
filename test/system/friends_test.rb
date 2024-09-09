@@ -21,8 +21,8 @@ class FriendsTest < ApplicationSystemTestCase
     fill_in "Twitter", with: @friend.twitter
     click_on "Create Friend"
 
-    assert_text "Friend was successfully created"
-    click_on "Back"
+    assert_text "Friend was successfully created."
+    click_on "Back", match: :first
   end
 
   test "should update Friend" do
@@ -36,14 +36,14 @@ class FriendsTest < ApplicationSystemTestCase
     fill_in "Twitter", with: @friend.twitter
     click_on "Update Friend"
 
-    assert_text "Friend was successfully updated"
-    click_on "Back"
+    assert_text "Friend was successfully updated."
+    click_on "Back", match: :first
   end
 
   test "should destroy Friend" do
     visit friend_url(@friend)
-    click_on "Destroy this friend", match: :first
+    click_on "Delete this friend", match: :first
 
-    assert_text "Friend was successfully destroyed"
+    assert_text "Friend was successfully deleted."
   end
 end
