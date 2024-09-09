@@ -1,0 +1,23 @@
+<div class="container mt-4">
+
+  <% content_for :title, "Friends" %>
+
+  <h1 class="display-4 text-center mb-4">Friends</h1>
+
+  <div id="friends" class="row">
+    <% @friends.each do |friend| %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <%= render friend %>
+            <a href="<%= friend_path(friend) %>" class="btn btn-primary mt-3">Show this friend</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="<%= new_friend_path %>" class="btn btn-success">New friend</a>
+  </div>
+</div>

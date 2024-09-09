@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <% content_for :title, "Editing friend" %>
+
+  <h1 class="display-4 text-center mb-4">Editing friend</h1>
+
+  <div class="card p-4">
+    <%= render "form", friend: @friend %>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="<%= friend_path(@friend) %>" class="btn btn-primary">Show this friend</a>
+    <a href="<%= friends_path %>" class="btn btn-secondary">Back to friends</a>
+  </div>
+</div>
