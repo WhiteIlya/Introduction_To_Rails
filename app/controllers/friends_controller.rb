@@ -4,10 +4,18 @@ class FriendsController < ApplicationController
   # GET /friends or /friends.json
   def index
     @friends = Friend.all
+    respond_to do |format|
+      format.html { render :index } # For HTML viewes
+      format.json { render json: @friends } # For API calls
+    end
   end
 
   # GET /friends/1 or /friends/1.json
   def show
+    respond_to do |format|
+      format.html { render :show } # For HTML viewes
+      format.json { render json: @friend } # For API calls
+    end
   end
 
   # GET /friends/new
@@ -26,10 +34,10 @@ class FriendsController < ApplicationController
     respond_to do |format|
       if @friend.save
         format.html { redirect_to friend_url(@friend), notice: "Friend was successfully created." }
-        format.json { render :show, status: :created, location: @friend }
+        format.json { render json: @friend, status: :created }  # API response
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @friend.errors, status: :unprocessable_entity }
+        format.json { render json: @friend.errors, status: :unprocessable_entity }  # API Error
       end
     end
   end
@@ -39,10 +47,10 @@ class FriendsController < ApplicationController
     respond_to do |format|
       if @friend.update(friend_params)
         format.html { redirect_to friend_url(@friend), notice: "Friend was successfully updated." }
-        format.json { render :show, status: :ok, location: @friend }
+        format.json { render json: @friend, status: :ok }  # API response success
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @friend.errors, status: :unprocessable_entity }
+        format.json { render json: @friend.errors, status: :unprocessable_entity }  # API error
       end
     end
   end
@@ -53,7 +61,7 @@ class FriendsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to friends_url, notice: "Friend was successfully deleted." }
-      format.json { head :no_content }
+      format.json { head :no_content }  # API success response
     end
   end
 

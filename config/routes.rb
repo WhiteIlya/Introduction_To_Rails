@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   root "home#index"
   get "home/about"
 
+  namespace :api do
+    post "/users/create", to: "users#create"
+    get "/users/me", to: "users#me"
+    post "/auth/login", to: "auth#login"
+  end
+
 
 
 
