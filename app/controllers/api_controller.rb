@@ -11,13 +11,15 @@ class ApiController < ActionController::API
       token = header.split(" ")[1]
       begin
         JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: "HS256")
-      rescue JWT::DecodeError
+      rescue JWT::DecodeError, JWT::ExpiredSignature => e # If token is outdated then client resieves the propper message
+        render json: { error: e.message }, status: :unauthorized
         nil
       end
     end
   end
 
   def current_user
+    return @user if @user  # if user cached no need to search the db
     if decoded_token
       user_id = decoded_token[0]["user_id"]
       @user = User.find_by(id: user_id)
