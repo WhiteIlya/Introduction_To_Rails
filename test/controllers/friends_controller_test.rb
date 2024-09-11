@@ -44,4 +44,11 @@ class Api::FriendsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :no_content
   end
+
+  # GET /friends but with outdated token
+  test "should not authorize with expired token" do
+    expired_token = JWT.encode({ user_id: @user.id, exp: 1.hour.ago.to_i }, Rails.application.credentials.secret_key_base)
+    get api_friends_url, headers: { Authorization: "Bearer #{expired_token}" }, as: :json
+    assert_response :unauthorized
+  end
 end
