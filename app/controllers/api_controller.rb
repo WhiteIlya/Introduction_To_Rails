@@ -11,8 +11,7 @@ class ApiController < ActionController::API
       token = header.split(" ")[1]
       begin
         JWT.decode(token, Rails.application.credentials.secret_key_base, true, algorithm: "HS256")
-      rescue JWT::DecodeError, JWT::ExpiredSignature => e # If token is outdated then client resieves the propper message
-        render json: { error: e.message }, status: :unauthorized
+      rescue JWT::DecodeError, JWT::ExpiredSignature # If token is outdated then client resieves the propper message
         nil
       end
     end
