@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   namespace :api do
     resources :friends, except: [ :new, :edit ]
     post "/users/create", to: "users#create"
-    get "/users/me", to: "users#me"
+    patch "/profile", to: "users#update"
+    get "/profile", to: "users#me"
     post "/auth/login", to: "auth#login"
   end
 

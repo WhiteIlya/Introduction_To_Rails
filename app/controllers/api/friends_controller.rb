@@ -3,7 +3,7 @@ class Api::FriendsController < ApiController
 
   # GET /friends
   def index
-    @friends = Friend.all
+    @friends = current_user.friends
     render json: @friends, status: :ok
   end
 
@@ -14,7 +14,7 @@ class Api::FriendsController < ApiController
 
   # POST /friends
   def create
-    @friend = Friend.new(friend_params)
+    @friend = current_user.friends.build(friend_params)  # Link a new friend to the current user
     if @friend.save
       render json: @friend, status: :created
     else
@@ -38,9 +38,10 @@ class Api::FriendsController < ApiController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+    # Cache a friend which is related to the current user
     def set_friend
-      @friend = Friend.find(params[:id])  # Сache a friend
+      @friend = current_user.friends.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Friend not found" }, status: :not_found
     end

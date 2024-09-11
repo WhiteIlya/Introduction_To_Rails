@@ -6,6 +6,7 @@ one:
   email: MyString
   phone: MyString
   twitter: MyString
+  user: one
 
 two:
   first_name: MyString
@@ -13,3 +14,4 @@ two:
   email: MyString
   phone: MyString
   twitter: MyString
+  user: one

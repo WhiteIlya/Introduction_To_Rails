@@ -12,6 +12,14 @@ class Api::UsersController < ApiController
     render json: current_user, status: :ok
   end
 
+  def update
+    if current_user.update(user_params)
+      render json: current_user, status: :ok
+    else
+      render json: current_user.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params
