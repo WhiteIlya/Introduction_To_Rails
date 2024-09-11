@@ -1,48 +1,47 @@
 require "test_helper"
 
-class FriendsControllerTest < ActionDispatch::IntegrationTest
+class Api::FriendsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @friend = friends(:one)
+    @friend = friends(:one) # fixtures for friends
+    @user = users(:one)  # fixtures for users
+    @token = JWT.encode({ user_id: @user.id }, Rails.application.credentials.secret_key_base)  # JWT generation
   end
 
+  # GET /friends
   test "should get index" do
-    get friends_url
+    get api_friends_url, headers: { Authorization: "Bearer #{@token}" }, as: :json
     assert_response :success
+    assert_match "application/json", @response.content_type
   end
 
-  test "should get new" do
-    get new_friend_url
+  # GET /friends/1
+  test "should show friend" do
+    get api_friend_url(@friend), headers: { Authorization: "Bearer #{@token}" }, as: :json
     assert_response :success
+    assert_match "application/json", @response.content_type
   end
 
+  # POST /friends
   test "should create friend" do
     assert_difference("Friend.count") do
-      post friends_url, params: { friend: { email: @friend.email, first_name: @friend.first_name, last_name: @friend.last_name, phone: @friend.phone, twitter: @friend.twitter } }
+      post api_friends_url, params: { friend: { email: "new_email@example.com", first_name: "New", last_name: "Friend", phone: "1234567890", twitter: "@new_friend" } }, headers: { Authorization: "Bearer #{@token}" }, as: :json
     end
 
-    assert_redirected_to friend_url(Friend.last)
+    assert_response :created
   end
 
-  test "should show friend" do
-    get friend_url(@friend)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_friend_url(@friend)
-    assert_response :success
-  end
-
+  # PATCH/PUT /friends/1
   test "should update friend" do
-    patch friend_url(@friend), params: { friend: { email: @friend.email, first_name: @friend.first_name, last_name: @friend.last_name, phone: @friend.phone, twitter: @friend.twitter } }
-    assert_redirected_to friend_url(@friend)
+    patch api_friend_url(@friend), params: { friend: { email: "updated_email@example.com", first_name: "Updated", last_name: "Friend", phone: "0987654321", twitter: "@updated_friend" } }, headers: { Authorization: "Bearer #{@token}" }, as: :json
+    assert_response :ok
   end
 
+  # DELETE /friends/1
   test "should destroy friend" do
     assert_difference("Friend.count", -1) do
-      delete friend_url(@friend)
+      delete api_friend_url(@friend), headers: { Authorization: "Bearer #{@token}" }, as: :json
     end
 
-    assert_redirected_to friends_url
+    assert_response :no_content
   end
 end
