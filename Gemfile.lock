@@ -125,7 +125,7 @@ GEM
       activesupport (>= 5.0.0)
     json (2.7.2)
     jsonapi-renderer (0.2.2)
-    jwt (2.8.2)
+    jwt (2.9.3)
       base64
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
@@ -333,7 +333,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
-  jwt (~> 2.8, >= 2.8.2)
+  jwt (~> 2.9)
   puma (>= 5.0)
   rack-cors (~> 2.0, >= 2.0.2)
   rails (~> 7.2.1)
