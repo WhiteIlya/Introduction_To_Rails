@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 gem "bcrypt", "~> 3.1", ">= 3.1.12"
 gem "jwt", "~> 2.8", ">= 2.8.2"
 gem "rack-cors", "~> 2.0", ">= 2.0.2"
-gem "active_model_serializers", "~> 0.10.14"
+gem "active_model_serializers", "~> 0.10.15"
 
 
 
